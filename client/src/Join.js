@@ -32,6 +32,7 @@ class Join extends Component {
             <hr></hr>
             <p>Join a room near you or enter a room code</p>
             <RoomNearYou location = "Wellesley" people = "6"/>
+            <RoomNearYou location = "Needham" people = "8"/>
           </div>
           <div className = "bottom">
             <input 
@@ -39,10 +40,10 @@ class Join extends Component {
               onChange = {this.handleChange}
               className = "input" 
               type = "text" 
-              placeholder = "display name"
+              placeholder = "room code"
               value = {this.state.name}
             />
-            <Link className = "button button-right" to = "/create">Join Room</Link>
+            <Link className = "button button-very-right" to = "/create">Join Room</Link>
           </div>
         </div>
         {/* <hr/> */}

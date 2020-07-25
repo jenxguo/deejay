@@ -17,11 +17,11 @@ class RoomNearYou extends Component {
     return(
       <div className = "onerow">
         <div className = "right">
-          <p>{this.props.location}</p>
-          <p>{this.props.people}</p>
+          <p className = "emphasize-me-too">{this.props.location}</p>
+          <p className = "grayed-out">{this.props.people} people listening</p>
         </div>
         <div className = "left">
-          <Link className = "button button-right" to = "/create">Join Room</Link>
+          <Link className = "button button-sorta-right" to = "/create">Join Room</Link>
         </div>
           
       </div>

@@ -10,7 +10,7 @@ class Create extends Component {
     super(props);
     //store user account info from text inputs
     this.state = {
-        roomcode: '00000',
+        myroomcode: 0,
         displayname: ''
     };
   }
@@ -18,6 +18,11 @@ class Create extends Component {
   //Event Change Handler Method for text inputs
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value, error: ''});
+  }
+
+  generateCode = (event) => {
+    this.handleChange(event);
+    this.setState({ myroomcode: Math.floor(10000 + Math.random() * 89999) }); 
   }
 
   render() {
@@ -34,17 +39,16 @@ class Create extends Component {
           <div className = "bottom">
             <input 
               name = "displayname"
-              onChange = {this.handleChange}
+              onChange = {this.generateCode}
               className = "input" 
               type = "text" 
               placeholder = "display name"
               value = {this.state.name}
             />
-            <Link className = "button button-right" to = {`room/${this.state.roomcode}`}>Join Room</Link>
+            <Link className = "button button-right" onClick = {this.generateCode} to = {`room/${this.state.myroomcode}`}>Join Room</Link>
+
           </div>
         </div>
-        {/* <hr/> */}
-        {/* <Link to = "/">go to home</Link> */}
     </div>
     )
   }
