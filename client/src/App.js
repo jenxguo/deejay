@@ -36,6 +36,10 @@ class App extends Component {
         <Switch>
           <Route exact path="/">
             <div className="App">
+<<<<<<< HEAD
+=======
+              <p className="App-intro">;{this.state.apiResponse}</p>
+>>>>>>> ee384db4e3f46078770900f2a503bf58ccac18f5
               <Landing/>
             </div>
           </Route>
