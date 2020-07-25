@@ -33,7 +33,7 @@ class Room extends Component {
   //youtube search api call
   searchYoutube = (searchQuery) => {
     $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q='+searchQuery+'&key='+API_KEY,
+      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q='+searchQuery+'&key='+API_KEY,
       type: "GET",
       success: response => {
         console.log(response)
@@ -54,34 +54,22 @@ class Room extends Component {
   //user selected video
   handleVideoSelect = (video) => {
     this.setState({selectedVideo: video});
-    ytdl('http://www.youtube.com/watch?v=A02s8omM_hI')
-    .pipe(fs.createWriteStream('video.flv'));
   }
 
-//   //download track from youtube
-//   sendURL = (URL) => {
-//     fetch(`http://localhost:4000/download?URL=${URL}`, {
-//         method:'GET'
-//     }).then(res => res.json())
-//     .then(json => console.log(json));
-// }
+  //queue selected video into firebase
 
+  //send first video in queue into youtube embedded audio player
 
-  //add song to array of songs w/ name user who added it
+  //when song finishes playing 
 
   //display song w/ username, runtime, queue order, title + artist
 
   //let people skip songs, remove songs
 
   render() {
-
     let addButton;
-
-    if (this.state.videos) {
-      addButton =
-        (
-          <button>Add Song</button>
-        )
+    if (this.state.videos.length != 0) {
+      addButton = (<button onClick={this.sendURL}>Add Song</button>)
     }
 
     return(
@@ -94,6 +82,7 @@ class Room extends Component {
           </form>
         </div>
           <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.videos}/>
+          {addButton}
       </div>
     )
   }

@@ -37,7 +37,7 @@ class App extends Component {
           <Route exact path="/">
             <div className="App">
               <p className="App-intro">;{this.state.apiResponse}</p>
-              <h1>test</h1>
+              <Landing/>
             </div>
           </Route>
           <Route exact path="/options">
