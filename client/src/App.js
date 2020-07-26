@@ -5,12 +5,10 @@ import Landing from './Landing'
 import Options from './Options'
 import Create from './Create'
 import Join from './Join'
+import Name from './Name'
 import Room from './Room'
 
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import {compose} from 'redux';
-import {connect} from 'react-redux';
-import {firebaseConnect, isLoaded} from 'react-redux-firebase';
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +51,11 @@ class App extends Component {
           <Route exact path="/join">
             <div className="App">
               <Join/>
+            </div>
+          </Route>
+          <Route exact path="/name/:id">
+            <div className="App">
+              <Name/>
             </div>
           </Route>
           <Route exact path="/room/:id">

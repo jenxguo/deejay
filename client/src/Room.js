@@ -154,7 +154,16 @@ class Room extends Component {
 
     return(
       <div className="room">
+        <div className = "people-list">
+          <h3>dj's</h3>
+        </div>
+        <div className = "middle">
+          <p>cool pic here</p>
+        </div>
+        <div className = "song-list">
+          <h3>next up...</h3>
         <h5>Welcome! If you're new here, it might take a few minutes to sync your music with everyone else!</h5>
+        </div>
         <div className="player">
           <YouTube videoId={this.state.currentlyPlaying.songId} opts={opts} />
         </div>

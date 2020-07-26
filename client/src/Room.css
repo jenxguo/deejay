@@ -1,0 +1,30 @@
+.room {
+    background-color: #4D2679;
+    min-height: 100vh;
+    min-width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+h4 {
+    margin: 0px;
+    padding: 0px;
+}
+
+h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 28px;
+    color: #DDC96A;
+    margin: 15px 0px 0px 0px;
+    padding: 0px;
+}
+
+.people-list, 
+.song-list {
+    background-color: #9F7DC3;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}

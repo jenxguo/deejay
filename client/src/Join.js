@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
 import RoomNearYou from "./RoomNearYou"
 import './Landing.css';
-import {firebaseConnect} from 'react-redux-firebase'
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class Join extends Component {
   constructor(props) {
     super(props);
     //store user account info from text inputs
     this.state = {
-        roomcode: '00000',
-        displayname: ''
+        roomcode: '',
     };
   }
 
@@ -32,21 +28,23 @@ class Join extends Component {
             <hr></hr>
             <p>Join a room near you or enter a room code</p>
             <RoomNearYou location = "Wellesley" people = "6"/>
+            <RoomNearYou location = "Needham" people = "8"/>
           </div>
           <div className = "bottom">
             <input 
-              name = "displayname"
+              name = "roomcode"
               onChange = {this.handleChange}
               className = "input" 
               type = "text" 
-              placeholder = "display name"
-              value = {this.state.name}
+              placeholder = "room code"
+              value = {this.state.roomcode}
             />
-            <Link className = "button button-right" to = "/create">Join Room</Link>
+            <Link 
+              className = "button button-very-right" 
+              to = {`name/${this.state.roomcode}`}
+            >Join Room</Link>
           </div>
         </div>
-        {/* <hr/> */}
-        {/* <Link to = "/">go to home</Link> */}
     </div>
     )
   }
