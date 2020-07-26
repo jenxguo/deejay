@@ -4,6 +4,9 @@ import YouTube from 'react-youtube'
 
 import './Room.css';
 import VideoList from './VideoList';
+import RecordPlayer from './img/recordplayer.png'
+import Send from './img/send.png'
+import Skip from './img/skip.png'
 
 import {firebaseConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux';
@@ -148,39 +151,65 @@ class Room extends Component {
     //current song info
     let current;
     if (this.state.currentlyPlaying) {
-      current = (<h2>{this.state.currentlyPlaying.title} added by {this.state.currentlyPlaying.user}</h2>)
+      current = (<h3>{this.state.currentlyPlaying.title} added by {this.state.currentlyPlaying.user}</h3>)
     }
+
+    // make the list of people
+    const peoplelist = Object.keys(this.state.people).map(i => {
+      return (
+        <p>
+          {this.state.people[i]}
+        </p>
+      );
+    });
+
+    // make the list of songs
+    const songlist = Object.keys(this.state.songQueue).map(songitem => {
+      return (
+        <p>
+          {this.state.songQueue[songitem].title}
+        </p>
+      );
+    });
 
     return(
       <div className="room">
         <div className = "people-list">
           <h3>dj's</h3>
+          {peoplelist}
         </div>
         <div className = "middle">
-          <p>cool pic here</p>
+          <div className = "title-and-pic">
+            <h2>your neighborhood deejay party</h2>
+            <img className = "record-player" src = {RecordPlayer}></img>
+          </div>
+          <div className = "song-button">
+            {current}
+            <img src = {Send}></img>
+            <button className = "skip-button" onClick={this.nextSong} disabled={this.state.songQueue.length < 2}><img src = {Skip}></img></button>
+          </div>
+          
+          <div className="player">
+            <YouTube videoId={this.state.currentlyPlaying.songId} opts={opts} />
+          </div>
+          <div className="playing">
+          {lastSong}
+          </div>
+          <div className="searchbar">
+            <form onSubmit={this.handleSubmit}>
+              <h3>Add a song!</h3>
+              <input name="search" type="text" onChange={this.handleChange} placeholder="Search" value={this.state.search}/>
+            </form>
+            <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.searchVideos}/>
+            {addButton}
+          </div>
         </div>
+          
         <div className = "song-list">
           <h3>next up...</h3>
-        <h5>Welcome! If you're new here, it might take a few minutes to sync your music with everyone else!</h5>
+          {songlist}
         </div>
-        <div className="player">
-          <YouTube videoId={this.state.currentlyPlaying.songId} opts={opts} />
-        </div>
-        <div className="playing">
-        {current}
-        <button onClick={this.nextSong} disabled={this.state.songQueue.length < 2}>Skip</button>
-        <h4>Careful, this will skip the song for everyone! Don't abuse if you don't want people to hate you.</h4>
-        {lastSong}
-        </div>
-        <div className="searchbar">
-          <form onSubmit={this.handleSubmit}>
-            <h4>Add a song!</h4>
-            <label>Search for a song title or artist (the more specific the better): </label>
-            <input name="search" type="text" onChange={this.handleChange} placeholder="Search" value={this.state.search}/>
-          </form>
-        </div>
-          <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.searchVideos}/>
-          {addButton}
+        
       </div>
     )
   }

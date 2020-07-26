@@ -21,7 +21,7 @@ class RoomNearYou extends Component {
           <p className = "grayed-out">{this.props.people} people listening</p>
         </div>
         <div className = "left">
-          <Link className = "button button-sorta-right" to = "/create">Join Room</Link>
+          <Link className = "button button-sorta-right" to = "/name/74960">Join Room</Link>
         </div>
           
       </div>
