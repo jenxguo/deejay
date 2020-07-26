@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {Link, withRouter, Redirect} from 'react-router-dom';
 
-const API_KEY = 'AIzaSyAodyTrGZd0H56nndYjYHrhQS_MK2I1IJQ';
+const API_KEY = 'AIzaSyAzVSxGUmoFuuwzgI7zBPx4IwLY6l9w9f0';
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 
@@ -83,10 +83,19 @@ class Room extends Component {
 
   //queue selected video into firebase
   addSong = () => {
-    const roomId = this.props.match.params.roomId;
+    //clear search
+    this.setState({
+      search: '',
+      searchVideos: [],
+      })
+
+
+    //const roomId = this.props.match.params.roomId;
+    const roomId = "12345"
     const id = this.state.selectedVideo.id.videoId;
     const title = this.state.selectedVideo.snippet.title;
-    const user = this.props.username;
+    const user = "jennifer"
+    //const user = this.props.username;
 
     //will push w/ random key hopefully in chronological order
     const databaseKey = this.props.firebase.push(`/rooms/${roomId}/queue`).key;
@@ -148,12 +157,14 @@ class Room extends Component {
 
     return(
       <div className="room">
+        <h5>Welcome! If you're new here, it might take a few minutes to sync your music with everyone else!</h5>
         <div className="player">
           <YouTube videoId={this.state.currentlyPlaying.songId} opts={opts} />
-          <button onClick={this.nextSong}>Skip</button>
         </div>
         <div className="playing">
         {current}
+        <button onClick={this.nextSong} disabled={this.state.songQueue.length < 2}>Skip</button>
+        <h4>Careful, this will skip the song for everyone! Don't abuse if you don't want people to hate you.</h4>
         {lastSong}
         </div>
         <div className="searchbar">
