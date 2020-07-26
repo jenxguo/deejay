@@ -18,11 +18,12 @@ class Create extends Component {
   //Event Change Handler Method for text inputs
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value, error: ''});
+    this.props.updateUsername(event.target.value)
   }
 
   generateCode = (event) => {
     this.handleChange(event);
-    this.setState({ myroomcode: Math.floor(10000 + Math.random() * 89999) }); 
+    this.setState({ myroomcode: Math.floor(10000 + Math.random() * 89999) });
   }
 
   createRoom = () => {
@@ -45,17 +46,17 @@ class Create extends Component {
             <p>Enter a display name so everyone will know who chose the latest bop!</p>
           </div>
           <div className = "bottom">
-            <input 
+            <input
               name = "displayname"
               onChange = {this.generateCode}
-              className = "input" 
-              type = "text" 
+              className = "input"
+              type = "text"
               placeholder = "display name"
               value = {this.state.displayname}
             />
-            <Link 
-              className = "button button-right" 
-              onClick = {this.createRoom} 
+            <Link
+              className = "button button-right"
+              onClick = {this.createRoom}
               to = {`room/${this.state.myroomcode}`}
             >Join Room</Link>
 

@@ -87,12 +87,11 @@ class Room extends Component {
       })
 
 
-    //const roomId = this.props.match.params.roomId;
-    const roomId = "12345"
+    const roomId = this.props.match.params.id;
+    //const roomId = "12345"
     const id = this.state.selectedVideo.id.videoId;
     const title = this.state.selectedVideo.snippet.title;
-    const user = "jennifer"
-    //const user = this.props.username;
+    const user = this.props.username;
 
     //will push w/ random key hopefully in chronological order
     const databaseKey = this.props.firebase.push(`/rooms/${roomId}/queue`).key;
@@ -110,8 +109,8 @@ class Room extends Component {
 
   //when song ends -> remove first song from state + also firebase ALSO SKIP BUTTON
   nextSong = () => {
-    //const roomId = this.props.match.params.roomId;
-    const roomId = "12345";
+    const roomId = this.props.match.params.id;
+    //const roomId = "12345";
     const key = this.state.currentlyPlaying.databaseKey;
     const path = `/rooms/${roomId}/queue/${key}`;
     const onComplete = () => {
@@ -199,8 +198,8 @@ const mapStateToProps = state => {
 export default compose(
   withRouter,
   firebaseConnect(props => {
-    //const roomId = props.match.params.roomId
-    const roomId = "12345"
+    const roomId = props.match.params.id
+    //const roomId = "12345"
     return [
       {path: `/rooms/${roomId}/people`, storeAs: 'people'},
       {path: `/rooms/${roomId}/queue`, storeAs: 'queue'}

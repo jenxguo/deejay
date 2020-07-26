@@ -19,6 +19,7 @@ class App extends Component {
     super(props);
     this.state = {
       apiResponse: '',
+      username: '',
     };
   }
 
@@ -30,6 +31,10 @@ class App extends Component {
 
   componentWillMount() {
       this.callAPI();
+  }
+
+  updateUsername = username => {
+    this.setState({ username: username })
   }
 
   render() {
@@ -49,7 +54,7 @@ class App extends Component {
           </Route>
           <Route exact path="/create">
             <div className="App">
-              <Create/>
+              <Create updateUsername={this.updateUsername} />
             </div>
           </Route>
           <Route exact path="/join">
@@ -59,12 +64,12 @@ class App extends Component {
           </Route>
           <Route exact path="/name/:id">
             <div className="App">
-              <Name/>
+              <Name updateUsername={this.updateUsername} />
             </div>
           </Route>
           <Route exact path="/room/:id">
             <div className="App">
-              <Room/>
+              <Room username={this.state.username}/>
             </div>
           </Route>
           <Route>

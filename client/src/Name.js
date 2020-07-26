@@ -17,6 +17,7 @@ class Name extends Component {
   //Event Change Handler Method for text inputs
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value, error: ''});
+    this.props.updateUsername(event.target.value)
   }
 
   joinRoom = () => {
@@ -47,17 +48,17 @@ class Name extends Component {
             <p>Enter a display name so everyone will know who chose the latest bop!</p>
           </div>
           <div className = "bottom">
-          <input 
+          <input
               name = "name"
-              className = "input" 
-              type = "text" 
+              className = "input"
+              type = "text"
               placeholder = "display name"
               onChange = {this.handleChange}
               value = {this.state.name}
             />
-            <Link 
-              className = "button button-right" 
-              onClick = {this.joinRoom} 
+            <Link
+              className = "button button-right"
+              onClick = {this.joinRoom}
               to = {`../room/${this.props.match.params.id}`}
             >Join Room</Link>
 
@@ -71,7 +72,7 @@ class Name extends Component {
 // takes redux global state and returns info as props!
 // check if deck is loaded before by short circuiting
 const mapStateToProps = (state, props) => {
-    const people = state.firebase.data['people'];   
+    const people = state.firebase.data['people'];
     return { people: people };
   }
 
