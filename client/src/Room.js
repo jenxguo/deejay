@@ -136,7 +136,7 @@ class Room extends Component {
     //add button appear only when search query has loaded
     let addButton;
     if (this.state.searchVideos.length !== 0) {
-      addButton = (<button onClick={this.addSong}>Add Song</button>)
+      addButton = (<button disabled={!this.state.selectedVideo} onClick={this.addSong}>Add Song</button>)
     }
 
     //last song, add more music message
