@@ -185,7 +185,7 @@ class Room extends Component {
         </div>
         <div className = "middle">
           <div className = "title-and-pic">
-            <h2>your neighborhood deejay party</h2>
+            <h2>welcome to the BLOCK PARTY</h2>
             <img className = "record-player" src = {RecordPlayer}></img>
           </div>
           <div className = "song-button">
@@ -193,7 +193,7 @@ class Room extends Component {
             <img src = {Send}></img>
             <button className = "skip-button" onClick={this.nextSong} disabled={this.state.songQueue.length < 2}><img src = {Skip}></img></button>
           </div>
-          
+
           <div className="player">
             <YouTube videoId={this.state.currentlyPlaying.songId} opts={opts} />
           </div>
@@ -209,12 +209,12 @@ class Room extends Component {
             {addButton}
           </div>
         </div>
-          
+
         <div className = "song-list">
           <h3>next up...</h3>
           {songlist}
         </div>
-        
+
       </div>
     )
   }
