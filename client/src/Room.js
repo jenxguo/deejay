@@ -74,6 +74,15 @@ class Room extends Component {
 
     return(
       <div className="room">
+        <div className = "people-list">
+          <h3>dj's</h3>
+        </div>
+        <div className = "middle">
+          <p>cool pic here</p>
+        </div>
+        <div className = "song-list">
+          <h3>next up...</h3>
+        </div>
         <div className="searchbar">
           <form onSubmit={this.handleSubmit}>
             <h4>Add a song!</h4>
