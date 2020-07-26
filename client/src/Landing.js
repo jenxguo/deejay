@@ -20,11 +20,11 @@ class Landing extends Component {
       <div className = "everything">
         <div className = "container">
             <div className = "top">
-              <h3>Dee Jay</h3>
+              <h3>Block Party</h3>
               <p className = "small-title">Welcome to the future of music</p>
               <hr></hr>
               <p>Do you miss getting together with friends and jamming to the same music?</p>
-              <p>Dee Jay allows you to reconnect with your friends during quarantine through music!</p>
+              <p>Block Party allows you to reconnect with your friends during quarantine through music!</p>
               <p>You can create rooms and invite your friends to listen to the same songs together, as well as joining music listening parties for your own neighborhood as well!</p>
               <p className = "emphasize-me">No downloads.  No signup.  No hassle.</p>
             </div>

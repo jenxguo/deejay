@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import RoomNearYou from "./RoomNearYou"
 import './Landing.css';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
+import {firebaseConnect, isLoaded} from 'react-redux-firebase'
+import {connect} from 'react-redux';
+import {compose} from 'redux';
 
 class Join extends Component {
   constructor(props) {
@@ -18,6 +21,10 @@ class Join extends Component {
   }
 
   render() {
+    // return loading screen if not yet loaded
+    if (!isLoaded(this.props.peopleinlocation)) {
+      return <div>loading...</div>
+    }
 
     return(
       <div className = "everything">
@@ -27,8 +34,7 @@ class Join extends Component {
             <p className = "small-title">Ready to vibe?!</p>
             <hr></hr>
             <p>Join a room near you or enter a room code</p>
-            <RoomNearYou location = "Wellesley" people = "6"/>
-            <RoomNearYou location = "Needham" people = "8"/>
+            <RoomNearYou location = "Wellesley" people = {this.props.peopleinlocation.length}/>
           </div>
           <div className = "bottom">
             <input 
@@ -50,4 +56,18 @@ class Join extends Component {
   }
 }
 
-export default Join;
+const mapStateToProps = state => {
+  const peopleinlocation = state.firebase.data['peopleinlocation'];
+  return {
+    peopleinlocation: peopleinlocation,
+  };
+};
+
+export default compose(
+  withRouter,
+  firebaseConnect(props => {
+    const roomId = 74960;
+    return [
+      {path: `/rooms/${roomId}/people`, storeAs: 'peopleinlocation'},
+    ];
+  }), connect(mapStateToProps)) (Join);
