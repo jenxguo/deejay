@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rambla&display=swap');
+
 .room {
     background-color: #4D2679;
     min-height: 100vh;
@@ -11,6 +13,8 @@
 h4 {
     margin: 0px;
     padding: 0px;
+    color: white;
+    font-family: 'Rambla', sans-serif;
 }
 
 h2 {
@@ -35,6 +39,7 @@ h2 {
 
 .song-list {
     width: 200px;
+    color: white;
 }
 
 .record-player {
@@ -63,5 +68,21 @@ h2 {
     padding: 15px;
 }
 
-.song-button {
+.song {
+    color: white;
+}
+
+p {
+    font-family: 'Rambla', sans-serif;
+    color: white;
+}
+
+.header {
+    font-family: 'Rambla', sans-serif;
+    color: white;
+    padding-bottom: 10px;
+}
+
+.the-search-bar {
+    margin: 20px;
 }

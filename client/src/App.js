@@ -8,30 +8,26 @@ import Join from './Join'
 import Name from './Name'
 import Room from './Room'
 
-import Radar from 'radar-sdk-js'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-
-const radarKey = "prj_live_pk_b1e32b742d58ca71a80c081038b73b07f5eb773f";
-Radar.initialize(radarKey)
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiResponse: '',
+      // apiResponse: '',
       username: '',
     };
   }
 
-  callAPI() {
-    fetch("http://localhost:8000/testAPI")
-        .then(res => res.text())
-        .then(res => this.setState({ apiResponse: res }));
-  }
-
-  componentWillMount() {
-      this.callAPI();
-  }
+  // callAPI() {
+  //   fetch("http://localhost:8000/testAPI")
+  //       .then(res => res.text())
+  //       .then(res => this.setState({ apiResponse: res }));
+  // }
+  //
+  // componentWillMount() {
+  //     this.callAPI();
+  // }
 
   updateUsername = username => {
     this.setState({ username: username })

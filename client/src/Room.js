@@ -8,12 +8,12 @@ import RecordPlayer from './img/recordplayer.png'
 import Send from './img/send.png'
 import Skip from './img/skip.png'
 
-import {firebaseConnect} from 'react-redux-firebase'
+import {firebaseConnect, isLoaded} from 'react-redux-firebase'
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {withRouter} from 'react-router-dom';
 
-const API_KEY = 'AIzaSyAzVSxGUmoFuuwzgI7zBPx4IwLY6l9w9f0';
+const YOUTUBE_API_KEY = 'AIzaSyDKFlFfjpSJD1TB1tHrVr0tq_W7XMW2pzo';
 
 class Room extends Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class Room extends Component {
   //youtube search api call
   searchYoutube = (searchQuery) => {
     $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q='+searchQuery+'&videoEmbeddable=true&key='+API_KEY,
+      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q='+searchQuery+'&videoEmbeddable=true&key='+YOUTUBE_API_KEY,
       type: "GET",
       success: response => {
         console.log(response)
@@ -125,6 +125,11 @@ class Room extends Component {
   //display currently playing song w/ username, runtime, title + artist
 
   render() {
+
+    // return loading screen if not yet loaded
+    if (!isLoaded(this.props.people)) {
+      return <div>loading...</div>
+    }
     //params for embedded yt player
     const opts = {
       height: '0',
@@ -155,10 +160,10 @@ class Room extends Component {
     }
 
     // make the list of people
-    const peoplelist = Object.keys(this.state.people).map(i => {
+    const peoplelist = Object.keys(this.props.people).map(i => {
       return (
         <p>
-          {this.state.people[i]}
+          {this.props.people[i]}
         </p>
       );
     });
@@ -198,7 +203,7 @@ class Room extends Component {
           <div className="searchbar">
             <form onSubmit={this.handleSubmit}>
               <h3>Add a song!</h3>
-              <input name="search" type="text" onChange={this.handleChange} placeholder="Search" value={this.state.search}/>
+              <input className = "the-search-bar" name="search" type="text" onChange={this.handleChange} placeholder="Search" value={this.state.search}/>
             </form>
             <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.searchVideos}/>
             {addButton}
