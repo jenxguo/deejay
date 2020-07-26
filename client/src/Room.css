@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rambla&display=swap');
+
 .room {
     background-color: #4D2679;
     min-height: 100vh;
@@ -5,26 +7,82 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 h4 {
     margin: 0px;
     padding: 0px;
+    color: white;
+    font-family: 'Rambla', sans-serif;
 }
 
-h3 {
+h2 {
     font-family: 'Bebas Neue', cursive;
-    font-size: 28px;
-    color: #DDC96A;
-    margin: 15px 0px 0px 0px;
+    font-size: 36px;
+    color: #D3BC4C;
+    margin: 30px 0px 20px 0px;
     padding: 0px;
 }
 
 .people-list, 
 .song-list {
     background-color: #9F7DC3;
-    padding: 20px;
+    padding: 35px;
     margin: 20px;
     border-radius: 5px;
+}
+
+.people-list {
+    width: 150px;
+}
+
+.song-list {
+    width: 200px;
+    color: white;
+}
+
+.record-player {
+    height: 80%;
+    width: auto;
+    margin: 0px;
+    padding: 0px;
+    line-height: 0px;
+}
+
+.middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.title-and-pic {
+    margin: 0px;
+    padding: 0px;
+    height: 500px;
+}
+
+.skip-button {
+    background-color: transparent;
+    border: none;
+    padding: 15px;
+}
+
+.song {
+    color: white;
+}
+
+p {
+    font-family: 'Rambla', sans-serif;
+    color: white;
+}
+
+.header {
+    font-family: 'Rambla', sans-serif;
+    color: white;
+    padding-bottom: 10px;
+}
+
+.the-search-bar {
+    margin: 20px;
 }
