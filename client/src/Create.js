@@ -1,23 +1,36 @@
 import React, {Component} from 'react';
 import './Landing.css';
 import {firebaseConnect} from 'react-redux-firebase'
-import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 class Create extends Component {
   constructor(props) {
     super(props);
     //store user account info from text inputs
     this.state = {
-        roomcode: '00000',
-        displayname: ''
+        myroomcode: 0,
+        displayname: '',
+        people: []
     };
   }
 
   //Event Change Handler Method for text inputs
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value, error: ''});
+  }
+
+  generateCode = (event) => {
+    this.handleChange(event);
+    this.setState({ myroomcode: Math.floor(10000 + Math.random() * 89999) }); 
+  }
+
+  createRoom = () => {
+    const updates = {};
+    const myroomcode = this.state.myroomcode;
+    const people = this.state.people.slice().concat(this.state.displayname);
+    updates[`/rooms/${myroomcode}/people`] = people;
+    this.props.firebase.update("/", updates);
   }
 
   render() {
@@ -34,20 +47,23 @@ class Create extends Component {
           <div className = "bottom">
             <input 
               name = "displayname"
-              onChange = {this.handleChange}
+              onChange = {this.generateCode}
               className = "input" 
               type = "text" 
               placeholder = "display name"
-              value = {this.state.name}
+              value = {this.state.displayname}
             />
-            <Link className = "button button-right" to = {`room/${this.state.roomcode}`}>Join Room</Link>
+            <Link 
+              className = "button button-right" 
+              onClick = {this.createRoom} 
+              to = {`room/${this.state.myroomcode}`}
+            >Join Room</Link>
+
           </div>
         </div>
-        {/* <hr/> */}
-        {/* <Link to = "/">go to home</Link> */}
     </div>
     )
   }
 }
 
-export default Create;
+export default compose(firebaseConnect(), withRouter)(Create);

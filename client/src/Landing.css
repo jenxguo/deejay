@@ -107,17 +107,30 @@ p {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    margin-left: 30px;
-    padding: 0px;
+    margin: 0px 30px 10px 30px;
     border-radius: 5px;
 }
 
-.right {
-
+.emphasize-me-too {
+    font-weight: bold;
 }
 
-.left {
+.right {
+    text-align: left;
+}
 
+.button-sorta-right {
+    margin-left: 70px;
+}
+
+.button-very-right {
+    position: relative;
+    float: right;
+    margin-right: 92px;
+}
+
+.grayed-out {
+    color: #DFDBE4;
 }
