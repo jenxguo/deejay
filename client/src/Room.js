@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {withRouter} from 'react-router-dom';
 
-const YOUTUBE_API_KEY = 'AIzaSyAzVSxGUmoFuuwzgI7zBPx4IwLY6l9w9f0';
+const YOUTUBE_API_KEY = 'AIzaSyAodyTrGZd0H56nndYjYHrhQS_MK2I1IJQ';
 
 class Room extends Component {
   constructor(props) {
