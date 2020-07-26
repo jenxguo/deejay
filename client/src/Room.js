@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {withRouter} from 'react-router-dom';
 
-const API_KEY = 'AIzaSyAzVSxGUmoFuuwzgI7zBPx4IwLY6l9w9f0';
+const YOUTUBE_API_KEY = 'AIzaSyAzVSxGUmoFuuwzgI7zBPx4IwLY6l9w9f0';
 
 class Room extends Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class Room extends Component {
   //youtube search api call
   searchYoutube = (searchQuery) => {
     $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q='+searchQuery+'&videoEmbeddable=true&key='+API_KEY,
+      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q='+searchQuery+'&videoEmbeddable=true&key='+YOUTUBE_API_KEY,
       type: "GET",
       success: response => {
         console.log(response)
