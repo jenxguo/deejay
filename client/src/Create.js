@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import './Landing.css';
 import {firebaseConnect} from 'react-redux-firebase'
-import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 class Create extends Component {
   constructor(props) {
@@ -11,7 +10,8 @@ class Create extends Component {
     //store user account info from text inputs
     this.state = {
         myroomcode: 0,
-        displayname: ''
+        displayname: '',
+        people: []
     };
   }
 
@@ -23,6 +23,14 @@ class Create extends Component {
   generateCode = (event) => {
     this.handleChange(event);
     this.setState({ myroomcode: Math.floor(10000 + Math.random() * 89999) }); 
+  }
+
+  createRoom = () => {
+    const updates = {};
+    const myroomcode = this.state.myroomcode;
+    const people = this.state.people.slice().concat(this.state.displayname);
+    updates[`/rooms/${myroomcode}/people`] = people;
+    this.props.firebase.update("/", updates);
   }
 
   render() {
@@ -43,9 +51,13 @@ class Create extends Component {
               className = "input" 
               type = "text" 
               placeholder = "display name"
-              value = {this.state.name}
+              value = {this.state.displayname}
             />
-            <Link className = "button button-right" onClick = {this.generateCode} to = {`room/${this.state.myroomcode}`}>Join Room</Link>
+            <Link 
+              className = "button button-right" 
+              onClick = {this.createRoom} 
+              to = {`room/${this.state.myroomcode}`}
+            >Join Room</Link>
 
           </div>
         </div>
@@ -54,4 +66,4 @@ class Create extends Component {
   }
 }
 
-export default Create;
+export default compose(firebaseConnect(), withRouter)(Create);

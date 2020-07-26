@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import './Landing.css';
-import {firebaseConnect} from 'react-redux-firebase'
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class Landing extends Component {
   constructor(props) {
