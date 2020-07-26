@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {Link, withRouter, Redirect} from 'react-router-dom';
 
-const API_KEY = 'AIzaSyDeleToe3CDCGyS8IegRZxUpr3d63balaM';
+const API_KEY = 'AIzaSyAodyTrGZd0H56nndYjYHrhQS_MK2I1IJQ';
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 
@@ -23,9 +23,31 @@ class Room extends Component {
       searchVideos: [],
       selectedVideo: null,
       search: '',
+      people: [],
+      //array of song objects w/ databaseKey, songId, title, user
       songQueue: [],
-      currentlyPlaying: 'tlGUom_AV4o',
+      currentlyPlaying: '',
     };
+  }
+
+  //load firebase song list + people list into state
+  componentDidUpdate(prevProps) {
+    const queue = this.props.queue
+    if (queue) {
+      if (this.props.people !== prevProps.people || queue !== prevProps.queue) {
+        //keep the keys somehow?
+        var queueArray = Object.keys(queue).map(key => (
+          { databaseKey: key, songId: queue[key].id, title: queue[key].title, user: queue[key].user }))
+
+        //Object.values(this.props.queue)
+        this.setState({
+          people: this.props.people,
+          //convert object to array of objects
+          songQueue: queueArray,
+          currentlyPlaying: queueArray[0],
+        });
+      }
+    }
   }
 
   //Event Change Handler Method for text inputs
@@ -36,12 +58,12 @@ class Room extends Component {
   //youtube search api call
   searchYoutube = (searchQuery) => {
     $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q='+searchQuery+'&key='+API_KEY,
+      url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q='+searchQuery+'&videoEmbeddable=true&key='+API_KEY,
       type: "GET",
       success: response => {
         console.log(response)
         this.setState({
-          searchVideos: response.items
+          searchVideos: response.items,
         });
       }
     });
@@ -59,27 +81,43 @@ class Room extends Component {
     this.setState({selectedVideo: video});
   }
 
-  //load firebase song list into state
-
-  //save first song in queue into currentlyplaying
-
   //queue selected video into firebase
-  queueSong = () => {
+  addSong = () => {
+    const roomId = this.props.match.params.roomId;
     const id = this.state.selectedVideo.id.videoId;
-    const url = "www.youtube.com/watch?v=" + id;
-    console.log(url)
+    const title = this.state.selectedVideo.snippet.title;
+    const user = this.props.username;
+
+    //will push w/ random key hopefully in chronological order
+    const databaseKey = this.props.firebase.push(`/rooms/${roomId}/queue`).key;
+    const onComplete = () => {
+      console.log(id)
+    }
+    const updates = {}
+    updates[`/rooms/${roomId}/queue/${databaseKey}`] = {
+      id: id,
+      title: title,
+      user: user,
+    }
+    this.props.firebase.update(`/`, updates, onComplete);
   }
 
-  //send currently playing in state queue into youtube embedded audio player
-  //look at youtube api?
-  //figure out how to get when song finishes playing
+  //when song ends -> remove first song from state + also firebase ALSO SKIP BUTTON
+  nextSong = () => {
+    //const roomId = this.props.match.params.roomId;
+    const roomId = "12345";
+    const key = this.state.currentlyPlaying.databaseKey;
+    const path = `/rooms/${roomId}/queue/${key}`;
+    const onComplete = () => {
+      console.log("next song")
+    }
+    this.props.firebase.remove(path, onComplete)
+  }
 
-  //when song finishes playing, take out first url from state and also from firebase
-
-  //display currently playing song w/ username, runtime, queue order, title + artist
+  //display currently playing song w/ username, runtime, title + artist
 
   render() {
-
+    //params for embedded yt player
     const opts = {
       height: '0',
       width: '0',
@@ -90,15 +128,33 @@ class Room extends Component {
       }
     }
 
+    //add button appear only when search query has loaded
     let addButton;
     if (this.state.searchVideos.length != 0) {
-      addButton = (<button onClick={this.queueSong}>Add Song</button>)
+      addButton = (<button onClick={this.addSong}>Add Song</button>)
+    }
+
+    //last song, add more music message
+    let lastSong;
+    if (this.state.songQueue.length < 2) {
+      lastSong = (<h4>Queue is empty! Add more music to keep the party going!</h4>)
+    }
+
+    //current song info
+    let current;
+    if (this.state.currentlyPlaying) {
+      current = (<h2>{this.state.currentlyPlaying.title} added by {this.state.currentlyPlaying.user}</h2>)
     }
 
     return(
       <div className="room">
         <div className="player">
-          <YouTube videoId={this.state.currentlyPlaying} opts={opts} />
+          <YouTube videoId={this.state.currentlyPlaying.songId} opts={opts} />
+          <button onClick={this.nextSong}>Skip</button>
+        </div>
+        <div className="playing">
+        {current}
+        {lastSong}
         </div>
         <div className="searchbar">
           <form onSubmit={this.handleSubmit}>
@@ -126,7 +182,8 @@ const mapStateToProps = state => {
 export default compose(
   withRouter,
   firebaseConnect(props => {
-    const roomId = props.match.params.roomId
+    //const roomId = props.match.params.roomId
+    const roomId = "12345"
     return [
       {path: `/rooms/${roomId}/people`, storeAs: 'people'},
       {path: `/rooms/${roomId}/queue`, storeAs: 'queue'}
