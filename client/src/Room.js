@@ -4,16 +4,13 @@ import YouTube from 'react-youtube'
 
 import './Room.css';
 import VideoList from './VideoList';
-import VideoDetail from './VideoDetail';
 
 import {firebaseConnect} from 'react-redux-firebase'
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {Link, withRouter, Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 const API_KEY = 'AIzaSyAzVSxGUmoFuuwzgI7zBPx4IwLY6l9w9f0';
-const fs = require('fs');
-const ytdl = require('ytdl-core');
 
 class Room extends Component {
   constructor(props) {
@@ -139,7 +136,7 @@ class Room extends Component {
 
     //add button appear only when search query has loaded
     let addButton;
-    if (this.state.searchVideos.length != 0) {
+    if (this.state.searchVideos.length !== 0) {
       addButton = (<button onClick={this.addSong}>Add Song</button>)
     }
 
