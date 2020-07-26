@@ -7,10 +7,14 @@ import Create from './Create'
 import Join from './Join'
 import Room from './Room'
 
+import Radar from 'radar-sdk-js'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {firebaseConnect, isLoaded} from 'react-redux-firebase';
+
+const radarKey = "prj_live_pk_b1e32b742d58ca71a80c081038b73b07f5eb773f";
+Radar.initialize(radarKey)
 
 class App extends Component {
   constructor(props) {
